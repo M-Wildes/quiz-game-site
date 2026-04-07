@@ -1,6 +1,6 @@
-# QuizForge Website Starter
+# QuizForge Website 
 
-This project is a production-minded starter for your quiz game website. It includes:
+This project is for the quiz games website. It includes:
 
 - a marketing homepage
 - a release download hub
