@@ -4,6 +4,7 @@ import { getWebsiteUser } from "@/lib/auth";
 
 const navigation = [
   { href: "/download", label: "Download" },
+  { href: "/community-quizzes", label: "Community" },
   { href: "/leaderboards", label: "Leaderboards" },
   { href: "/battle-pass", label: "Battle Pass" },
   { href: "/dashboard", label: "Dashboard" },

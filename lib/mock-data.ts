@@ -1,5 +1,7 @@
 import type {
   BattlePassOverview,
+  CommunityQuizDetail,
+  CommunityQuizDirectory,
   DashboardSnapshot,
   DownloadRelease,
   LeaderboardEntry,
@@ -190,4 +192,193 @@ export const mockBattlePass: BattlePassOverview = {
       claimed: tier <= 6,
     };
   }),
+};
+
+export const mockCommunityQuizDirectory: CommunityQuizDirectory = {
+  isPreview: true,
+  updatedAt: "2026-04-06T20:30:00.000Z",
+  quizzes: [
+    {
+      slug: "science-night-shift",
+      title: "Science Night Shift",
+      description:
+        "A fast-moving late-night science set with space, biology, and weird lab trivia mixed together.",
+      category: "Science",
+      difficulty: "medium",
+      questionCount: 5,
+      playCount: 38,
+      authorName: "NovaCircuit",
+      createdAt: "2026-04-06T19:15:00.000Z",
+      sharePath: "/community-quizzes/science-night-shift",
+    },
+    {
+      slug: "retro-arcade-mix",
+      title: "Retro Arcade Mix",
+      description:
+        "Old-school gaming questions built for players who grew up in arcades or wish they had.",
+      category: "Gaming",
+      difficulty: "easy",
+      questionCount: 5,
+      playCount: 24,
+      authorName: "PixelScholar",
+      createdAt: "2026-04-05T18:00:00.000Z",
+      sharePath: "/community-quizzes/retro-arcade-mix",
+    },
+    {
+      slug: "midnight-movie-marathon",
+      title: "Midnight Movie Marathon",
+      description:
+        "A shared movie set built around cult classics, modern blockbusters, and soundtrack moments.",
+      category: "Movies",
+      difficulty: "hard",
+      questionCount: 5,
+      playCount: 17,
+      authorName: "EchoQuill",
+      createdAt: "2026-04-04T21:40:00.000Z",
+      sharePath: "/community-quizzes/midnight-movie-marathon",
+    },
+  ],
+};
+
+export const mockCommunityQuizDetails: Record<string, CommunityQuizDetail> = {
+  "science-night-shift": {
+    ...mockCommunityQuizDirectory.quizzes[0],
+    questions: [
+      {
+        id: "science-night-shift-1",
+        order: 1,
+        prompt: "What is the hottest planet in our solar system?",
+        answers: ["Mars", "Venus", "Mercury", "Jupiter"],
+        correctIndex: 1,
+        explanation:
+          "Venus traps heat with a dense carbon-dioxide atmosphere, making it hotter than Mercury.",
+      },
+      {
+        id: "science-night-shift-2",
+        order: 2,
+        prompt: "Which blood cells are primarily responsible for carrying oxygen?",
+        answers: ["Platelets", "White blood cells", "Red blood cells", "Plasma cells"],
+        correctIndex: 2,
+        explanation:
+          "Red blood cells carry oxygen through the body using hemoglobin.",
+      },
+      {
+        id: "science-night-shift-3",
+        order: 3,
+        prompt: "What part of the cell contains the genetic material in most organisms?",
+        answers: ["Nucleus", "Ribosome", "Golgi apparatus", "Cell membrane"],
+        correctIndex: 0,
+        explanation:
+          "The nucleus stores DNA in most plant and animal cells.",
+      },
+      {
+        id: "science-night-shift-4",
+        order: 4,
+        prompt: "What is the chemical symbol for sodium?",
+        answers: ["S", "So", "Na", "Sd"],
+        correctIndex: 2,
+        explanation:
+          "Sodium uses the symbol Na, derived from the Latin word natrium.",
+      },
+      {
+        id: "science-night-shift-5",
+        order: 5,
+        prompt: "How many bones are in the adult human body?",
+        answers: ["198", "206", "214", "222"],
+        correctIndex: 1,
+        explanation:
+          "The typical adult human skeleton has 206 bones.",
+      },
+    ],
+  },
+  "retro-arcade-mix": {
+    ...mockCommunityQuizDirectory.quizzes[1],
+    questions: [
+      {
+        id: "retro-arcade-mix-1",
+        order: 1,
+        prompt: "Which company created the original Pac-Man?",
+        answers: ["Sega", "Nintendo", "Namco", "Capcom"],
+        correctIndex: 2,
+        explanation: "Pac-Man was created by Namco and released in 1980.",
+      },
+      {
+        id: "retro-arcade-mix-2",
+        order: 2,
+        prompt: "What color is the main character in Q*bert?",
+        answers: ["Purple", "Orange", "Blue", "Green"],
+        correctIndex: 1,
+        explanation: "Q*bert is the orange character hopping across the pyramid.",
+      },
+      {
+        id: "retro-arcade-mix-3",
+        order: 3,
+        prompt: "Which classic arcade game features a giant ape named Donkey Kong?",
+        answers: ["Dig Dug", "Galaga", "Donkey Kong", "Defender"],
+        correctIndex: 2,
+        explanation: "Donkey Kong introduced Mario in the early arcade era.",
+      },
+      {
+        id: "retro-arcade-mix-4",
+        order: 4,
+        prompt: "In Space Invaders, what are you defending at the bottom of the screen?",
+        answers: ["A city", "A base", "A starship dock", "A laboratory"],
+        correctIndex: 1,
+        explanation: "The player controls a laser base at the bottom of the screen.",
+      },
+      {
+        id: "retro-arcade-mix-5",
+        order: 5,
+        prompt: "Which yellow arcade character spends the game eating pellets?",
+        answers: ["Frogger", "Pac-Man", "Q*bert", "Bub"],
+        correctIndex: 1,
+        explanation: "Pac-Man clears mazes by eating pellets and avoiding ghosts.",
+      },
+    ],
+  },
+  "midnight-movie-marathon": {
+    ...mockCommunityQuizDirectory.quizzes[2],
+    questions: [
+      {
+        id: "midnight-movie-marathon-1",
+        order: 1,
+        prompt: "Which film won Best Picture at the Oscars for 1998 releases?",
+        answers: ["Saving Private Ryan", "Shakespeare in Love", "The Truman Show", "Elizabeth"],
+        correctIndex: 1,
+        explanation: "Shakespeare in Love won Best Picture over Saving Private Ryan.",
+      },
+      {
+        id: "midnight-movie-marathon-2",
+        order: 2,
+        prompt: "Who directed Inception?",
+        answers: ["Denis Villeneuve", "Christopher Nolan", "David Fincher", "Ridley Scott"],
+        correctIndex: 1,
+        explanation: "Christopher Nolan wrote and directed Inception.",
+      },
+      {
+        id: "midnight-movie-marathon-3",
+        order: 3,
+        prompt: "In The Matrix, what color pill does Neo take?",
+        answers: ["Blue", "Red", "Green", "White"],
+        correctIndex: 1,
+        explanation: "Neo takes the red pill to learn the truth.",
+      },
+      {
+        id: "midnight-movie-marathon-4",
+        order: 4,
+        prompt: "Which movie features the line about needing a bigger boat?",
+        answers: ["Jaws", "Alien", "Titanic", "The Abyss"],
+        correctIndex: 0,
+        explanation: "The famous line comes from Jaws.",
+      },
+      {
+        id: "midnight-movie-marathon-5",
+        order: 5,
+        prompt: "Which actor played Maximus in Gladiator?",
+        answers: ["Russell Crowe", "Joaquin Phoenix", "Gerard Butler", "Colin Farrell"],
+        correctIndex: 0,
+        explanation: "Russell Crowe played Maximus Decimus Meridius.",
+      },
+    ],
+  },
 };

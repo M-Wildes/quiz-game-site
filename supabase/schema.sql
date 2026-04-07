@@ -76,6 +76,39 @@ create table if not exists public.user_battle_pass_progress (
   primary key (user_id, season_id)
 );
 
+create table if not exists public.community_quizzes (
+  id uuid primary key default gen_random_uuid(),
+  author_id uuid not null references public.profiles(id) on delete cascade,
+  slug text unique not null,
+  title text not null,
+  description text,
+  category text not null,
+  difficulty text not null check (difficulty in ('easy', 'medium', 'hard')),
+  question_count integer not null default 0,
+  play_count integer not null default 0,
+  is_published boolean not null default true,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists public.community_quiz_questions (
+  id uuid primary key default gen_random_uuid(),
+  quiz_id uuid not null references public.community_quizzes(id) on delete cascade,
+  question_order integer not null,
+  prompt text not null,
+  answers jsonb not null,
+  correct_index integer not null,
+  explanation text,
+  created_at timestamptz not null default now(),
+  unique (quiz_id, question_order)
+);
+
+create index if not exists community_quizzes_created_at_idx
+  on public.community_quizzes (created_at desc);
+
+create index if not exists community_quiz_questions_quiz_order_idx
+  on public.community_quiz_questions (quiz_id, question_order);
+
 create or replace function public.handle_new_user()
 returns trigger
 language plpgsql
@@ -192,6 +225,8 @@ alter table public.user_stats enable row level security;
 alter table public.quiz_results enable row level security;
 alter table public.leaderboard_entries enable row level security;
 alter table public.user_battle_pass_progress enable row level security;
+alter table public.community_quizzes enable row level security;
+alter table public.community_quiz_questions enable row level security;
 
 drop policy if exists "Users can read own profile" on public.profiles;
 create policy "Users can read own profile"
@@ -234,3 +269,79 @@ create policy "Users can read own battle pass progress"
 on public.user_battle_pass_progress
 for select
 using (auth.uid() = user_id);
+
+drop policy if exists "Published community quizzes are public" on public.community_quizzes;
+create policy "Published community quizzes are public"
+on public.community_quizzes
+for select
+using (is_published = true or auth.uid() = author_id);
+
+drop policy if exists "Users can create own community quizzes" on public.community_quizzes;
+create policy "Users can create own community quizzes"
+on public.community_quizzes
+for insert
+with check (auth.uid() = author_id);
+
+drop policy if exists "Users can update own community quizzes" on public.community_quizzes;
+create policy "Users can update own community quizzes"
+on public.community_quizzes
+for update
+using (auth.uid() = author_id);
+
+drop policy if exists "Users can delete own community quizzes" on public.community_quizzes;
+create policy "Users can delete own community quizzes"
+on public.community_quizzes
+for delete
+using (auth.uid() = author_id);
+
+drop policy if exists "Published community quiz questions are public" on public.community_quiz_questions;
+create policy "Published community quiz questions are public"
+on public.community_quiz_questions
+for select
+using (
+  exists (
+    select 1
+    from public.community_quizzes quizzes
+    where quizzes.id = community_quiz_questions.quiz_id
+      and (quizzes.is_published = true or quizzes.author_id = auth.uid())
+  )
+);
+
+drop policy if exists "Users can create questions for own community quizzes" on public.community_quiz_questions;
+create policy "Users can create questions for own community quizzes"
+on public.community_quiz_questions
+for insert
+with check (
+  exists (
+    select 1
+    from public.community_quizzes quizzes
+    where quizzes.id = community_quiz_questions.quiz_id
+      and quizzes.author_id = auth.uid()
+  )
+);
+
+drop policy if exists "Users can update questions for own community quizzes" on public.community_quiz_questions;
+create policy "Users can update questions for own community quizzes"
+on public.community_quiz_questions
+for update
+using (
+  exists (
+    select 1
+    from public.community_quizzes quizzes
+    where quizzes.id = community_quiz_questions.quiz_id
+      and quizzes.author_id = auth.uid()
+  )
+);
+
+drop policy if exists "Users can delete questions for own community quizzes" on public.community_quiz_questions;
+create policy "Users can delete questions for own community quizzes"
+on public.community_quiz_questions
+for delete
+using (
+  exists (
+    select 1
+    from public.community_quizzes quizzes
+    where quizzes.id = community_quiz_questions.quiz_id
+      and quizzes.author_id = auth.uid()
+  )
+);

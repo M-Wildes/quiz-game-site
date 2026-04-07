@@ -10,6 +10,7 @@ import { formatDate, formatNumber } from "@/lib/utils";
 const launchLoop = [
   "Download the latest build for Windows or macOS from one clear release hub.",
   "Create a single account that follows the player across the site and desktop app.",
+  "Build community quizzes on the website and send players straight into them from the app.",
   "Turn every finished quiz into synced scores, streaks, and category history.",
   "Keep the season moving with battle pass rewards, leaderboard climbs, and daily momentum.",
 ];
@@ -32,6 +33,12 @@ const productPillars = [
     title: "XP, rankings, and unlocks turn short sessions into a habit.",
     description:
       "A good quiz game should not end at the result screen. This loop gives players another reason to queue up the next run.",
+  },
+  {
+    eyebrow: "Community layer",
+    title: "Players can make quizzes, share them, and load them in the app.",
+    description:
+      "Community-made sets give the website its own reason to be visited even when players are not checking scores or downloading a new build.",
   },
 ];
 
@@ -85,6 +92,9 @@ export default async function Home() {
                 </Link>
                 <Link className="button-secondary" href="/signup">
                   Create account
+                </Link>
+                <Link className="button-ghost" href="/community-quizzes">
+                  Browse community quizzes
                 </Link>
               </div>
 
@@ -173,7 +183,7 @@ export default async function Home() {
           eyebrow="Product loop"
           title="Everything your quiz game needs to feel alive between launches."
         />
-        <div className="grid gap-5 lg:grid-cols-3">
+        <div className="grid gap-5 lg:grid-cols-4">
           {productPillars.map((pillar) => (
             <article className="panel rounded-[28px] p-6" key={pillar.title}>
               <p className="tiny-label">{pillar.eyebrow}</p>

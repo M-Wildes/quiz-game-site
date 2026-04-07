@@ -7,12 +7,14 @@ export function SiteFooter() {
         <div>
           <p className="font-semibold text-[var(--foreground)]">QuizForge</p>
           <p className="mt-1 max-w-xl">
-            The home for every new build, synced player profile, season reward,
-            and leaderboard climb in the quiz game ecosystem.
+            The home for every new build, synced player profile, shared
+            community quiz, season reward, and leaderboard climb in the quiz
+            game ecosystem.
           </p>
         </div>
         <div className="flex flex-wrap gap-4">
           <Link href="/download">Download</Link>
+          <Link href="/community-quizzes">Community</Link>
           <Link href="/dashboard">Dashboard</Link>
           <Link href="/leaderboards">Leaderboards</Link>
           <Link href="/battle-pass">Battle Pass</Link>

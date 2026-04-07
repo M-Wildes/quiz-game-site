@@ -110,3 +110,35 @@ export type CalculatedQuizResult = {
   correctAnswers: number;
   totalQuestions: number;
 };
+
+export type CommunityQuizQuestion = {
+  id: string;
+  order: number;
+  prompt: string;
+  answers: string[];
+  correctIndex: number;
+  explanation: string;
+};
+
+export type CommunityQuizSummary = {
+  slug: string;
+  title: string;
+  description: string;
+  category: string;
+  difficulty: Difficulty;
+  questionCount: number;
+  playCount: number;
+  authorName: string;
+  createdAt: string;
+  sharePath: string;
+};
+
+export type CommunityQuizDetail = CommunityQuizSummary & {
+  questions: CommunityQuizQuestion[];
+};
+
+export type CommunityQuizDirectory = {
+  isPreview: boolean;
+  updatedAt: string;
+  quizzes: CommunityQuizSummary[];
+};
