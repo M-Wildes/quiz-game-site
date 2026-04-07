@@ -1,26 +1,213 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f6f0e7;
+  --foreground: #1d1715;
+  --font-display:
+    "Trebuchet MS", "Aptos Display", "Aptos", "Segoe UI", sans-serif;
+  --font-mono: "Consolas", "Cascadia Mono", "Courier New", monospace;
+  --surface: rgba(255, 251, 245, 0.82);
+  --surface-strong: #fff8ed;
+  --line: rgba(62, 43, 22, 0.12);
+  --muted: #69594d;
+  --accent: #ff8a00;
+  --accent-soft: rgba(255, 138, 0, 0.14);
+  --accent-strong: #8d4200;
+  --teal: #0a8f83;
+  --teal-soft: rgba(10, 143, 131, 0.14);
+  --blue: #2340cf;
+  --blue-soft: rgba(35, 64, 207, 0.12);
+  --shadow: 0 20px 70px rgba(63, 42, 21, 0.12);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-display);
+  --font-mono: var(--font-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
+  min-height: 100vh;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-image:
+    radial-gradient(circle at top left, rgba(255, 181, 76, 0.22), transparent 25%),
+    radial-gradient(circle at 86% 14%, rgba(10, 143, 131, 0.2), transparent 28%),
+    linear-gradient(180deg, #f6f0e7 0%, #f3ece4 48%, #f8f4ee 100%);
+  font-family: var(--font-display), sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  background: rgba(255, 138, 0, 0.22);
+}
+
+.page-shell {
+  width: min(1120px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+.panel {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+}
+
+.panel-strong {
+  border: 1px solid rgba(255, 138, 0, 0.18);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.76), rgba(255, 242, 221, 0.94)),
+    var(--surface-strong);
+  box-shadow: var(--shadow);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.45rem 0.85rem;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(62, 43, 22, 0.08);
+  font-size: 0.72rem;
+  font-family: var(--font-mono), monospace;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.tiny-label {
+  font-size: 0.76rem;
+  font-family: var(--font-mono), monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.button-primary,
+.button-secondary,
+.button-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border-radius: 999px;
+  padding: 0.9rem 1.35rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease,
+    color 160ms ease;
+}
+
+.button-primary:hover,
+.button-secondary:hover,
+.button-ghost:hover {
+  transform: translateY(-1px);
+}
+
+.button-primary {
+  background: linear-gradient(135deg, #ff9700, #ff6f00);
+  color: #fff8f1;
+  box-shadow: 0 16px 35px rgba(255, 132, 0, 0.26);
+}
+
+.button-secondary {
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(62, 43, 22, 0.1);
+  color: var(--foreground);
+}
+
+.button-ghost {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--muted);
+}
+
+.button-ghost:hover {
+  border-color: rgba(62, 43, 22, 0.08);
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.metric-value {
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.hero-title,
+.section-title {
+  letter-spacing: -0.05em;
+}
+
+.hero-title {
+  font-size: clamp(3rem, 7vw, 5.75rem);
+  line-height: 0.94;
+}
+
+.section-title {
+  font-size: clamp(2rem, 4.4vw, 3.4rem);
+  line-height: 0.98;
+}
+
+.body-copy {
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.float-in {
+  animation: rise 600ms ease both;
+}
+
+.float-card {
+  animation: drift 8s ease-in-out infinite;
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 720px) {
+  .page-shell {
+    width: min(100%, calc(100% - 1.25rem));
+  }
 }
