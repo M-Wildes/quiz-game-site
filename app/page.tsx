@@ -8,30 +8,30 @@ import { getLatestRelease } from "@/lib/downloads";
 import { formatDate, formatNumber } from "@/lib/utils";
 
 const launchLoop = [
-  "Install the current build from the download hub.",
-  "Create one account that works in both the site and the game.",
-  "Sync every quiz result into your cloud profile and leaderboard history.",
-  "Feed that data into seasonal XP and battle pass progression.",
+  "Download the latest build for Windows or macOS from one clear release hub.",
+  "Create a single account that follows the player across the site and desktop app.",
+  "Turn every finished quiz into synced scores, streaks, and category history.",
+  "Keep the season moving with battle pass rewards, leaderboard climbs, and daily momentum.",
 ];
 
 const productPillars = [
   {
-    eyebrow: "Latest build delivery",
-    title: "A proper launcher page instead of a random file link.",
+    eyebrow: "Release hub",
+    title: "The website becomes the trusted home for every new build.",
     description:
-      "Pull release metadata from GitHub, surface patch notes, and make the newest installer obvious on every visit.",
+      "Players always know where to grab the newest installer, read patch notes, and check what changed before they jump back in.",
   },
   {
-    eyebrow: "Account sync",
-    title: "One identity across the web dashboard and the desktop game.",
+    eyebrow: "Shared account",
+    title: "One player identity across the dashboard and the quiz app.",
     description:
-      "Supabase Auth keeps sign-up, sign-in, and password reset in one place so every score maps back to a real player profile.",
+      "Sign-in, season progress, and score history stay connected so players never feel like they are starting over on a different screen.",
   },
   {
-    eyebrow: "Retention loop",
-    title: "Leaderboards and XP give players a reason to come back tomorrow.",
+    eyebrow: "Return loop",
+    title: "XP, rankings, and unlocks turn short sessions into a habit.",
     description:
-      "A seasonal battle pass turns quiz volume into progression, cosmetics, and visible milestones rather than isolated play sessions.",
+      "A good quiz game should not end at the result screen. This loop gives players another reason to queue up the next run.",
   },
 ];
 
@@ -50,6 +50,9 @@ export default async function Home() {
     battlePass.nextTierXp - (battlePass.currentTier - 1) * 200,
     1,
   );
+  const leadEntry = leaderboard.entries[0];
+  const liveEnvironmentReady =
+    hasSupabaseEnv() && !release.isPreview && !leaderboard.isPreview;
 
   return (
     <div className="space-y-16 pb-20 pt-10">
@@ -60,8 +63,8 @@ export default async function Home() {
               <div className="flex flex-wrap gap-3">
                 <span className="eyebrow">Seasonal progression</span>
                 <span className="eyebrow">Shared web + game accounts</span>
-                {(!hasSupabaseEnv() || release.isPreview) && (
-                  <span className="eyebrow">Preview mode until env is connected</span>
+                {!liveEnvironmentReady && (
+                  <span className="eyebrow">Sample data while live services finish syncing</span>
                 )}
               </div>
 
@@ -70,9 +73,9 @@ export default async function Home() {
                   Give the quiz game a live home players keep coming back to.
                 </h1>
                 <p className="body-copy max-w-2xl text-lg sm:text-xl">
-                  QuizForge turns the website into more than a download page:
-                  it becomes the place where installs, profiles, synced scores,
-                  leaderboards, and battle pass momentum all meet.
+                  QuizForge is the online home for the game: a place to install
+                  the latest build, sign in once, follow season progress, and
+                  chase leaderboard position after every quiz session.
                 </p>
               </div>
 
@@ -94,9 +97,13 @@ export default async function Home() {
                 />
                 <MetricCard
                   accent="teal"
-                  hint="Starter metric card for your home page"
-                  label="Tracked players"
-                  value={formatNumber(1842)}
+                  hint={
+                    leadEntry
+                      ? `${leadEntry.username} currently leads the board`
+                      : "Leaderboard standings update here"
+                  }
+                  label="Top score in rotation"
+                  value={leadEntry ? formatNumber(leadEntry.score) : "Coming soon"}
                 />
                 <MetricCard
                   accent="blue"
@@ -116,9 +123,9 @@ export default async function Home() {
                       v{release.version}
                     </p>
                     <p className="mt-2 max-w-sm text-sm text-[var(--muted)]">
-                      {release.platforms[0]?.label ?? "Windows"} download
-                      surfaced from your release feed, ready to swap from mock
-                      data to live assets.
+                      {release.platforms[0]?.label ?? "Desktop"} builds, patch
+                      notes, and release timing all live here so players do not
+                      have to hunt for the newest version.
                     </p>
                   </div>
                   <div className="rounded-full bg-[var(--accent-soft)] px-4 py-2 text-sm font-semibold text-[var(--accent-strong)]">
@@ -184,7 +191,7 @@ export default async function Home() {
           <div className="panel rounded-[30px] p-7">
             <SectionHeading
               description="XP gained from quizzes flows into a seasonal reward track. Start with badges, profile frames, and question pack unlocks, then expand later."
-              eyebrow="Battle pass preview"
+              eyebrow="Battle pass"
               title={`${battlePass.seasonName} keeps players chasing the next unlock.`}
             />
             <div className="mt-8 space-y-4">

@@ -11,7 +11,7 @@ export default async function LeaderboardsPage() {
       <section className="page-shell">
         <div className="panel rounded-[32px] p-8 lg:p-10">
           <SectionHeading
-            description="Show global rankings, surface momentum, and make each category feel like a ladder worth climbing."
+            description="The leaderboard should make every strong run feel visible, competitive, and worth chasing again."
             eyebrow="Leaderboard command"
             title="Turn every good quiz run into public momentum."
           />
@@ -24,7 +24,7 @@ export default async function LeaderboardsPage() {
                   {entry.username}
                 </h2>
                 <p className="mt-3 text-sm text-[var(--muted)]">
-                  {entry.category} specialist · {entry.streak} streak
+                  {entry.category} specialist | {entry.streak} streak
                 </p>
                 <p className="mt-5 text-4xl font-semibold tracking-[-0.05em]">
                   {formatNumber(entry.score)}
@@ -68,27 +68,31 @@ export default async function LeaderboardsPage() {
         <div className="space-y-6">
           <div className="panel rounded-[28px] p-7">
             <SectionHeading
-              description="Use weekly resets, category tabs, and featured rivals later. The starter focuses on a strong global ladder first."
-              eyebrow="Preview state"
+              description={
+                leaderboard.isPreview
+                  ? "Sample rankings are on display while the season board is still filling up."
+                  : "The current season leaderboard is live and updating from synced player results."
+              }
+              eyebrow="Board status"
               title={
                 leaderboard.isPreview
-                  ? "Sample leaderboard currently shown"
-                  : "Live leaderboard connected"
+                  ? "Season board warming up"
+                  : "Live season board"
               }
             />
           </div>
 
           <div className="panel rounded-[28px] p-7">
             <SectionHeading
-              description="You already have a JSON endpoint ready for the desktop app, overlays, or Discord bots."
-              eyebrow="API ready"
-              title="Consume rankings anywhere"
+              description="The same ranking feed can power the website, the desktop client, community bots, or stream overlays."
+              eyebrow="Ranking feed"
+              title="Use the same standings everywhere"
             />
             <div className="mt-8 rounded-[22px] bg-[rgba(29,23,21,0.92)] p-5 font-mono text-sm text-[#f7f2eb]">
               <p>GET /api/leaderboard</p>
               <p className="mt-2 text-[#c8bbab]">
-                Returns ranked entries and a preview flag when the database is
-                not wired in yet.
+                Returns ranked entries for the current board, with a fallback
+                sample list when live data is not available.
               </p>
             </div>
           </div>
@@ -97,3 +101,4 @@ export default async function LeaderboardsPage() {
     </div>
   );
 }
+

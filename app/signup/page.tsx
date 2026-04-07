@@ -30,7 +30,7 @@ export default async function SignupPage({ searchParams }: SignupPageProps) {
             Create your account
           </h2>
           <p className="mt-3 text-sm text-[var(--muted)]">
-            The SQL starter automatically creates a matching profile and stats row.
+            Your profile, stats, and season progress are created automatically when the account is ready.
           </p>
 
           {params.error ? (

@@ -12,13 +12,14 @@ const requirements = [
 
 export default async function DownloadPage() {
   const release = await getLatestRelease();
+  const hasLiveDownload = !release.isPreview && release.downloadUrl !== "#";
 
   return (
     <div className="space-y-12 pb-20 pt-10">
       <section className="page-shell">
         <div className="panel rounded-[32px] p-8 lg:p-10">
           <SectionHeading
-            description="Use this page as the public home for the latest build, patch notes, platform choices, and rollout status."
+            description="This is the public release hub for the quiz app: the newest installer, supported platforms, and the notes players should read before updating."
             eyebrow="Release hub"
             title={`Download the latest build, now serving v${release.version}.`}
           />
@@ -30,45 +31,66 @@ export default async function DownloadPage() {
                 v{release.version}
               </p>
               <p className="mt-3 text-sm text-[var(--muted)]">
-                Published {formatDate(release.publishedAt)} · {release.fileSize}
+                Published {formatDate(release.publishedAt)} | {release.fileSize}
               </p>
               <p className="mt-5 text-base leading-7 text-[var(--muted)]">
                 {release.isPreview || !hasGitHubReleaseEnv()
-                  ? "The page is currently showing fallback release data until you wire in the GitHub repo details."
-                  : "This page is reading live GitHub release metadata and can be linked directly from your game launcher or installer prompts."}
+                  ? "The release feed is still being prepared. The page layout is live now, and the latest installer will appear here as soon as a GitHub release is published."
+                  : "This page is reading the live release feed, so players can grab the newest installer and patch notes from one reliable link."}
               </p>
-              <a
-                className="button-primary mt-6"
-                href={release.downloadUrl}
-                rel="noreferrer"
-                target="_blank"
-              >
-                Download latest build
-              </a>
-            </div>
-
-            <div className="grid gap-4">
-              {release.platforms.map((platform) => (
+              {hasLiveDownload ? (
                 <a
-                  className="panel flex items-center justify-between rounded-[26px] p-5 transition-transform hover:-translate-y-0.5"
-                  href={platform.href}
-                  key={`${platform.label}-${platform.architecture}`}
+                  className="button-primary mt-6"
+                  href={release.downloadUrl}
                   rel="noreferrer"
                   target="_blank"
                 >
-                  <div>
-                    <p className="text-xl font-semibold tracking-[-0.04em]">
-                      {platform.label}
-                    </p>
-                    <p className="mt-2 text-sm text-[var(--muted)]">
-                      {platform.architecture} · {platform.size}
-                    </p>
-                  </div>
-                  <div className="rounded-full bg-[var(--accent-soft)] px-4 py-2 text-sm font-semibold text-[var(--accent-strong)]">
-                    {platform.status}
-                  </div>
+                  Download latest build
                 </a>
-              ))}
+              ) : (
+                <span className="button-secondary mt-6">
+                  Release publishing soon
+                </span>
+              )}
+            </div>
+
+            <div className="grid gap-4">
+              {release.platforms.map((platform) => {
+                const content = (
+                  <>
+                    <div>
+                      <p className="text-xl font-semibold tracking-[-0.04em]">
+                        {platform.label}
+                      </p>
+                      <p className="mt-2 text-sm text-[var(--muted)]">
+                        {platform.architecture} | {platform.size}
+                      </p>
+                    </div>
+                    <div className="rounded-full bg-[var(--accent-soft)] px-4 py-2 text-sm font-semibold text-[var(--accent-strong)]">
+                      {platform.status}
+                    </div>
+                  </>
+                );
+
+                return platform.href !== "#" ? (
+                  <a
+                    className="panel flex items-center justify-between rounded-[26px] p-5 transition-transform hover:-translate-y-0.5"
+                    href={platform.href}
+                    key={`${platform.label}-${platform.architecture}`}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    {content}
+                  </a>
+                ) : (
+                  <div
+                    className="panel flex items-center justify-between rounded-[26px] p-5"
+                    key={`${platform.label}-${platform.architecture}`}
+                  >
+                    {content}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -77,7 +99,7 @@ export default async function DownloadPage() {
       <section className="page-shell grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="panel rounded-[28px] p-7">
           <SectionHeading
-            description="Release notes should be short, scannable, and tied to the latest version. Keep the top line player-facing."
+            description="Keep every release easy to scan. Players should immediately understand what feels better, what was fixed, and what is worth trying next."
             eyebrow="Patch notes"
             title="What changed in this build"
           />
@@ -117,15 +139,15 @@ export default async function DownloadPage() {
 
           <div className="panel rounded-[28px] p-7">
             <SectionHeading
-              description="This starter already includes the endpoint scaffold for serving the latest release metadata."
-              eyebrow="API ready"
-              title="Hook the frontend to your real release pipeline"
+              description="The website already exposes a release endpoint, so the desktop app, launcher, or patch prompt can all read the same source of truth."
+              eyebrow="Release endpoint"
+              title="One feed for the website and launcher"
             />
             <div className="mt-8 rounded-[22px] bg-[rgba(29,23,21,0.92)] p-5 font-mono text-sm text-[#f7f2eb]">
               <p>GET /api/download/latest</p>
               <p className="mt-2 text-[#c8bbab]">
-                Fetches the latest GitHub release and falls back gracefully when
-                env vars are missing.
+                Serves the newest release metadata and keeps the download page
+                aligned with the launcher experience.
               </p>
             </div>
           </div>
@@ -134,3 +156,4 @@ export default async function DownloadPage() {
     </div>
   );
 }
+

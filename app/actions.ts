@@ -15,7 +15,7 @@ export async function loginAction(formData: FormData) {
   const supabase = await createServerSupabaseClient();
 
   if (!supabase) {
-    redirect("/login?error=Add+your+Supabase+env+vars+to+enable+login.");
+    redirect("/login?error=Sign-in+is+not+available+right+now.+Please+try+again+soon.");
   }
 
   const { error } = await supabase.auth.signInWithPassword({
@@ -39,7 +39,7 @@ export async function signupAction(formData: FormData) {
   const supabase = await createServerSupabaseClient();
 
   if (!supabase) {
-    redirect("/signup?error=Add+your+Supabase+env+vars+to+enable+sign+up.");
+    redirect("/signup?error=Account+creation+is+not+available+right+now.+Please+try+again+soon.");
   }
 
   const { error } = await supabase.auth.signUp({

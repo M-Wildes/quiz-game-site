@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     template: "%s | QuizForge",
   },
   description:
-    "A launch-ready quiz game website with downloads, account sync, leaderboards, and battle pass progression.",
+    "The online home for QuizForge, with app downloads, shared accounts, live leaderboards, and seasonal progression.",
 };
 
 export default function RootLayout({

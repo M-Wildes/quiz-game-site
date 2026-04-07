@@ -26,7 +26,7 @@ export default async function BattlePassPage() {
       <section className="page-shell">
         <div className="panel rounded-[32px] p-8 lg:p-10">
           <SectionHeading
-            description="Battle pass progression is where raw quiz volume turns into a long-term reason to stay engaged."
+            description="Season progress should reward consistency. Every finished quiz pushes the player a little closer to the next reward."
             eyebrow="Season progression"
             title={`${battlePass.seasonName} rewards consistency, not just one lucky run.`}
           />
@@ -38,7 +38,7 @@ export default async function BattlePassPage() {
                 {battlePass.currentTier}
               </p>
               <p className="mt-3 text-sm text-[var(--muted)]">
-                {battlePass.currentXp} XP earned · {battlePass.daysLeft} days left
+                {battlePass.currentXp} XP earned | {battlePass.daysLeft} days left
               </p>
               <div className="mt-6">
                 <ProgressBar
@@ -51,9 +51,9 @@ export default async function BattlePassPage() {
 
             <div className="panel rounded-[28px] p-7">
               <SectionHeading
-                description="Keep the first season reward pool mostly cosmetic so balance changes stay low-risk."
+                description="Start with a reward track that feels satisfying without locking core gameplay behind the pass."
                 eyebrow="XP economy"
-                title="Suggested first-pass reward pacing"
+                title="How players move through the season"
               />
               <div className="mt-8 space-y-3">
                 {xpRules.map((rule) => (
@@ -102,3 +102,4 @@ export default async function BattlePassPage() {
     </div>
   );
 }
+

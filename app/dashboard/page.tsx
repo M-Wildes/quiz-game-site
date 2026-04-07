@@ -17,16 +17,15 @@ export default async function DashboardPage() {
       <section className="page-shell">
         <div className="panel rounded-[32px] p-8 lg:p-10">
           <SectionHeading
-            description="This page is the player command center: identity, progress, recent runs, category strengths, and next unlocks."
+            description="Keep the player focused on what matters next: current level, recent performance, strongest categories, and how close the next unlock is."
             eyebrow="Player dashboard"
             title={`Welcome back, ${snapshot.playerName}.`}
           />
 
           {snapshot.isPreview ? (
             <div className="mt-8 rounded-[24px] border border-[rgba(255,138,0,0.18)] bg-[rgba(255,245,232,0.9)] px-5 py-4 text-sm text-[var(--accent-strong)]">
-              Preview data is showing because no authenticated Supabase session
-              is available yet. Once you add env vars and sign in, this page
-              will reflect the real player record.
+              You are looking at a sample player profile for now. Sign in to
+              load your own synced stats, season progress, and quiz history.
             </div>
           ) : null}
 
@@ -92,7 +91,7 @@ export default async function DashboardPage() {
                 <div>
                   <p className="font-medium">{result.category}</p>
                   <p className="text-sm text-[var(--muted)]">
-                    {formatDate(result.playedAt)} · {result.accuracy}% accuracy
+                    {formatDate(result.playedAt)} | {result.accuracy}% accuracy
                   </p>
                 </div>
                 <div className="text-right">
@@ -164,3 +163,4 @@ export default async function DashboardPage() {
     </div>
   );
 }
+

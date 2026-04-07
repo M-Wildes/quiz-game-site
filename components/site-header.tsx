@@ -28,7 +28,7 @@ export async function SiteHeader() {
               <p className="text-lg font-semibold tracking-[-0.05em]">
                 QuizForge
               </p>
-              <p className="tiny-label">live quiz command center</p>
+              <p className="tiny-label">download, compete, progress</p>
             </div>
           </Link>
 
@@ -45,7 +45,7 @@ export async function SiteHeader() {
           {user ? (
             <>
               <span className="hidden text-sm text-[var(--muted)] sm:inline">
-                Pilot: {playerLabel}
+                Player: {playerLabel}
               </span>
               <Link className="button-secondary !px-4 !py-3" href="/dashboard">
                 Dashboard

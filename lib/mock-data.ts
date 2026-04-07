@@ -8,16 +8,16 @@ import type {
 export const mockRelease: DownloadRelease = {
   isPreview: true,
   version: "0.9.4",
-  channel: "Preview dataset",
+  channel: "Founder's build",
   publishedAt: "2026-04-05T09:00:00.000Z",
   fileName: "quizforge-setup.exe",
   fileSize: "126 MB",
   downloadUrl: "#",
   notes: [
-    "Season dashboard shell added.",
-    "Synced score upload endpoint ready for integration.",
-    "Leaderboard snapshots now support weekly and global views.",
-    "Battle pass reward track seeded with cosmetic unlocks.",
+    "Fresh home, dashboard, and progression pages for the public website.",
+    "Shared account flow prepared for both the desktop app and the web dashboard.",
+    "Leaderboard snapshots now surface current-season momentum and top categories.",
+    "Battle pass rewards, notes, and release info are organized into one cleaner hub.",
   ],
   platforms: [
     {
@@ -25,21 +25,21 @@ export const mockRelease: DownloadRelease = {
       architecture: "x64",
       size: "126 MB",
       href: "#",
-      status: "Latest",
+      status: "Ready first",
     },
     {
       label: "macOS",
       architecture: "ARM64",
       size: "131 MB",
       href: "#",
-      status: "Preview",
+      status: "Coming next",
     },
     {
       label: "Linux",
       architecture: "x64",
       size: "129 MB",
       href: "#",
-      status: "Experimental",
+      status: "Planned",
     },
   ],
 };
@@ -104,7 +104,7 @@ export const mockLeaderboard: LeaderboardEntry[] = [
 export const mockDashboard: DashboardSnapshot = {
   isPreview: true,
   signedIn: false,
-  playerName: "Demo Challenger",
+  playerName: "Guest Challenger",
   level: 12,
   totalXp: 2460,
   xpToNextLevel: 240,
@@ -170,11 +170,21 @@ export const mockBattlePass: BattlePassOverview = {
       reward:
         tier === 1
           ? "Starter profile badge"
+          : tier === 2
+            ? "Retro avatar frame"
+            : tier === 3
+              ? "Quiz title unlock"
           : tier === 4
             ? "Arcade neon avatar frame"
+            : tier === 5
+              ? "Season winner banner"
+              : tier === 6
+                ? "Bonus question pack"
+                : tier === 7
+                  ? "Profile flair set"
             : tier === 8
               ? "Night shift theme pack"
-              : `${rarity} reward crate`,
+              : "Season reward",
       rarity,
       unlocked: tier <= 7,
       claimed: tier <= 6,

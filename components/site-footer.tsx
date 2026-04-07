@@ -7,8 +7,8 @@ export function SiteFooter() {
         <div>
           <p className="font-semibold text-[var(--foreground)]">QuizForge</p>
           <p className="mt-1 max-w-xl">
-            Built to ship the download funnel, synced player identity, and the
-            progression loop for your quiz game in one place.
+            The home for every new build, synced player profile, season reward,
+            and leaderboard climb in the quiz game ecosystem.
           </p>
         </div>
         <div className="flex flex-wrap gap-4">
