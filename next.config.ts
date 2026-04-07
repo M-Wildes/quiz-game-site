@@ -1,8 +1,12 @@
 import path from "node:path";
 import type { NextConfig } from "next";
 
+const distDir =
+  process.env.NEXT_DIST_DIR ??
+  (process.env.VERCEL ? ".next" : ".next-build");
+
 const nextConfig: NextConfig = {
-  distDir: process.env.NEXT_DIST_DIR ?? ".next-build",
+  distDir,
   turbopack: {
     root: path.resolve(__dirname),
   },
